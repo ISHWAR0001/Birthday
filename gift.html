@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Gift Surprise 🎁</title>
+
+<style>
+html,body{
+  margin:0;
+  width:100%;
+  height:100%;
+  background:radial-gradient(circle at top,#111,#000);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-family:Poppins,Arial;
+  overflow:hidden;
+}
+
+.container{
+  text-align:center;
+}
+
+/* 🎁 GIFT BOX */
+.gift-box{
+  position:relative;
+  width:170px;
+  height:170px;
+  background:linear-gradient(135deg,#ff3b3b,#ff6b6b);
+  border-radius:16px;
+  box-shadow:
+    0 0 25px rgba(255,0,0,.8),
+    inset 0 0 10px rgba(255,255,255,.4);
+  cursor:pointer;
+  transition:transform .3s ease;
+}
+.gift-box:hover{
+  transform:scale(1.05);
+}
+
+.gift-lid{
+  position:absolute;
+  top:-42px;
+  left:0;
+  width:100%;
+  height:48px;
+  background:linear-gradient(135deg,#ff6b6b,#ff8f8f);
+  border-radius:16px 16px 0 0;
+  box-shadow:0 8px 15px rgba(0,0,0,.4);
+  transition:transform .6s ease;
+}
+
+.gift-box.open .gift-lid{
+  transform:translateY(-65px) rotate(-12deg);
+}
+
+/* 🎀 ITEMS */
+.item{
+  position:absolute;
+  left:50%;
+  top:50%;
+  transform:translate(-50%,-50%) scale(0);
+  font-size:3.2rem;
+  opacity:0;
+  transition:all .6s cubic-bezier(.2,1.2,.4,1);
+  filter:drop-shadow(0 0 10px rgba(255,255,255,.8));
+  cursor:pointer;
+}
+
+/* positions */
+.teddy{ top:15%; }
+.book{ left:20%; }
+.toy1{ left:80%; }
+.toy2{ top:80%; }
+
+/* show items */
+.show{
+  opacity:1;
+  transform:translate(-50%,-50%) scale(1);
+}
+
+/* glow */
+@keyframes glow{
+  0%{filter:drop-shadow(0 0 6px #fff)}
+  100%{filter:drop-shadow(0 0 16px #00ffff)}
+}
+.show{
+  animation:glow 1.5s infinite alternate;
+}
+
+/* TEXT */
+.text{
+  margin-top:35px;
+  font-size:1.7rem;
+  color:#f8f9ff;
+  text-shadow:0 0 10px #00ffff,0 0 25px #00ffff;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+  <div class="gift-box" id="giftBox">
+    <div class="gift-lid"></div>
+
+    <!-- 🎁 GIFTS -->
+    <div class="item teddy">🧸</div>
+    <div class="item book" id="book">📖</div>
+    <div class="item toy1">🪀</div>
+    <div class="item toy2">🎀</div>
+  </div>
+
+  <div class="text" id="text">Tap the Gift 🎁</div>
+</div>
+
+<script>
+const box = document.getElementById("giftBox");
+const items = document.querySelectorAll(".item");
+const text = document.getElementById("text");
+const book = document.getElementById("book");
+
+box.addEventListener("click", ()=>{
+  box.classList.add("open");
+  text.innerText = "Click the Book 📖";
+
+  items.forEach((item,i)=>{
+    setTimeout(()=>{
+      item.classList.add("show");
+    }, i*350);
+  });
+});
+
+/* 📖 OPEN MEMORY BOOK PAGE */
+book.addEventListener("click", (e)=>{
+  e.stopPropagation(); // box click na ho
+  window.location.href = "memory.html";
+});
+</script>
+
+</body>
+</html>

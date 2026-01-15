@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Happy Birthday Riya 🎉</title>
+
+<style>
+html,body{
+  margin:0;
+  width:100%;
+  height:100%;
+  background:#000;
+  overflow:hidden;
+  font-family:'Poppins',Arial;
+}
+
+/* CENTER */
+#entry{
+  position:absolute;
+  inset:0;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  flex-direction:column;
+  opacity:0;
+  animation:fadeIn 2s forwards;
+}
+
+h1{
+  font-size:3rem;
+  color:#ff00ff;
+  text-shadow:0 0 30px #ff00ff;
+  animation:zoom 1.5s ease-out forwards;
+}
+
+p{
+  color:#ccc;
+  margin-top:20px;
+  font-size:1.1rem;
+  opacity:0;
+  animation:fadeUp 1.5s 2s forwards;
+}
+
+@keyframes zoom{
+  from{transform:scale(0);opacity:0}
+  to{transform:scale(1);opacity:1}
+}
+@keyframes fadeUp{
+  from{transform:translateY(30px);opacity:0}
+  to{transform:translateY(0);opacity:1}
+}
+@keyframes fadeIn{
+  to{opacity:1}
+}
+
+/* CONFETTI */
+.confetti{
+  position:absolute;
+  width:8px;
+  height:14px;
+  background:hsl(var(--h),100%,50%);
+  top:-10%;
+  animation:fall linear infinite;
+}
+@keyframes fall{
+  to{
+    transform:translateY(120vh) rotate(360deg);
+  }
+}
+
+/* TAP */
+#tap{
+  position:absolute;
+  bottom:40px;
+  color:#00ffff;
+  font-size:1rem;
+  opacity:0;
+  animation:blink 1.5s 3.5s infinite;
+}
+@keyframes blink{
+  50%{opacity:1}
+}
+</style>
+</head>
+
+<!-- 👇 BODY CLICK -->
+<body onclick="goNext()">
+
+<div id="entry">
+  <h1>🎉 Happy Birthday Madam Jiii 💕💖🎂 🎉</h1>
+  <p>A small celebration begins ✨</p>
+</div>
+
+<div id="tap">Tap anywhere to continue ➜</div>
+
+<!-- 🔊 PARTY POP SOUND -->
+<audio id="popSound" src="./Musics/partypopper-92822.mp3" preload="auto"></audio>
+
+<script>
+
+/* 🔊 PLAY POP SOUND ON PAGE LOAD (AFTER BUTTON CLICK FROM PREVIOUS PAGE) */
+window.addEventListener("load", () => {
+  if(sessionStorage.getItem("playPop") === "yes"){
+    const pop = document.getElementById("popSound");
+    pop.volume = 1;
+
+    // try autoplay
+    pop.play().catch(()=>{});
+
+    // clear flag
+    sessionStorage.removeItem("playPop");
+  }
+});
+
+// CONFETTI GENERATOR
+for(let i=0;i<120;i++){
+  const c=document.createElement("div");
+  c.className="confetti";
+  c.style.left=Math.random()*100+"vw";
+  c.style.animationDuration=3+Math.random()*4+"s";
+  c.style.setProperty("--h",Math.random()*360);
+  document.body.appendChild(c);
+}
+
+// NEXT STEP
+function goNext(){
+  document.body.style.transition = "opacity 1s";
+  document.body.style.opacity = 0;
+
+  setTimeout(()=>{
+    document.body.innerHTML = `
+      <div style="
+        display:flex;
+        align-items:center;
+        justify-content:center;
+        height:100vh;
+        background:#000;
+        color:#00ffff;
+        font-size:1.8rem;
+        font-family:Poppins,Arial;
+        text-align:center;
+        text-shadow:0 0 20px #00ffff;
+      ">
+        🎂 Now get ready for cake cutting ✨
+      </div>
+    `;
+    document.body.style.opacity = 1;
+
+    setTimeout(()=>{
+      window.location.replace("./Cake.html");
+    },1800);
+
+  },1000);
+}
+</script>
+
+</body>
+</html>
